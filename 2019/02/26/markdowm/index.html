@@ -96,7 +96,7 @@
 	            <a href="#s1">创作</a>
 	                    <ul class="submenu">
 	                        <li>
-	                        <a class="category-link" href="/categories/其他/">其他</a></li><li><a class="category-link" href="/categories/野生/">野生</a>
+	                        <a class="category-link" href="/categories/其他/">其他</a></li><li><a class="category-link" href="/categories/野生技能/">野生技能</a>
 	                    </li></ul>
 	        </li>
 	        
@@ -157,15 +157,71 @@
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
                 <h1 id="Markdown笔记"><a href="#Markdown笔记" class="headerlink" title="Markdown笔记"></a>Markdown笔记</h1><hr>
-<h3 id="开头"><a href="#开头" class="headerlink" title="开头"></a>开头</h3><p>&emsp;&emsp;写博客的必备技能，早点点亮早点超脱<br>&emsp;&emsp;这里都是我从网上看到的，摘抄一点点常用的就好，当然，我在写这个的时候已经会了…所以网址也记不全<br>&emsp;&emsp;我用的是<a href="https://atom.io/" target="_blank" rel="noopener">Atom</a>，吹爆Atom，插件还能再好玩一点:horse:</p>
-<h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
-<li>标题表示</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">    <span class="token comment" spellcheck="true"># First title</span>
-    <span class="token comment" spellcheck="true">## Second title</span>
-    <span class="token punctuation">..</span>.
-    <span class="token comment" spellcheck="true">###### 6-th title</span>
+<h3 id="开头"><a href="#开头" class="headerlink" title="开头"></a>开头</h3><p>&emsp;&emsp;写博客的必备技能，早点点亮早点超脱<br>&emsp;&emsp;这里都是我从<a href="https://www.jianshu.com/p/335db5716248" target="_blank" rel="noopener">网上</a>看到的，摘抄一点点常用的就好，当然，我在写这个的时候已经会了…所以网址也记不全<br>&emsp;&emsp;我用的是<a href="https://atom.io/" target="_blank" rel="noopener">Atom</a>，吹爆Atom，插件还能再好玩一点:horse:</p>
+<h3 id="常用语法"><a href="#常用语法" class="headerlink" title="常用语法"></a>常用语法</h3><ul>
+<li><p>标题表示</p>
+<pre class=" language-bash"><code class="language-bash">  <span class="token comment" spellcheck="true"># 一级标题</span>
+  <span class="token comment" spellcheck="true">## 二级标题</span>
+  <span class="token punctuation">..</span>.
+  <span class="token comment" spellcheck="true">###### 六级标题</span>
 </code></pre>
+</li>
+<li><p>引用</p>
+<pre class=" language-bash"><code class="language-bash">  <span class="token operator">></span> 被引用的部分
+</code></pre>
+</li>
+<li><p>列表</p>
+<pre class=" language-bash"><code class="language-bash">  - 像当前这样的坨坨
+  1. 这样是罗马标签
+</code></pre>
+</li>
+<li><p>跳转</p>
+<pre class=" language-bash"><code class="language-bash">  <span class="token punctuation">[</span>超链接文字<span class="token punctuation">]</span><span class="token punctuation">(</span>完整URL<span class="token punctuation">)</span>
+</code></pre>
+</li>
+<li><p>分割线</p>
+<pre class=" language-bash"><code class="language-bash">  --- 会出现一条像标题下面那样的分割线
+</code></pre>
+</li>
+<li><p>插入代码块，我博客代码渲染的<a href="http://github.com/ele828/hexo-prism-plugin" target="_blank" rel="noopener">插件</a></p>
+<pre class=" language-bash"><code class="language-bash">  ```这里写要渲染的风格（bash，c，c++巴拉巴拉）
+      这里面写代码
+</code></pre>
+<p><code>`</code></p>
+</li>
+<li><p>插入图片</p>
+<pre class=" language-bash"><code class="language-bash">  我下了Atom的插件，叫markdown-img-paste，可以直接赋值粘贴
+  自动生成一个文件夹存放图片
+  如果想手动输入，格式是
+  <span class="token operator">!</span><span class="token punctuation">[</span>图片名字<span class="token punctuation">]</span><span class="token punctuation">(</span>完整URL <span class="token string">'图片下面的说明'</span><span class="token punctuation">)</span>
+</code></pre>
+</li>
+<li><p>空格</p>
+<pre class=" language-bash"><code class="language-bash">  <span class="token operator">&amp;</span>ensp<span class="token punctuation">;</span> 一个空格
+  <span class="token operator">&amp;</span>emsp<span class="token punctuation">;</span> 两个空格
+</code></pre>
+</li>
+</ul>
+<h3 id="不常用的"><a href="#不常用的" class="headerlink" title="不常用的"></a>不常用的</h3><ul>
+<li><p>字体变化</p>
+<pre class=" language-bash"><code class="language-bash">  *这中间的是斜体*
+  **这中间的是强调**
+  ~~这中间的是删除线~~
+  字体染色需要更高级的markdown支持
+</code></pre>
+</li>
+<li><p>表格</p>
+<pre class=" language-bash"><code class="language-bash">  表头<span class="token operator">|</span>条目一<span class="token operator">|</span>条目二
+  :---:<span class="token operator">|</span>:---:<span class="token operator">|</span>:---:
+  项目<span class="token operator">|</span>项目一<span class="token operator">|</span>项目二
+</code></pre>
+</li>
+<li><p>emoji</p>
+<pre class=" language-bash"><code class="language-bash">  :emoji的英文名称:
+  或者直接在markdown里面用微软输入法打表情也⭐
+</code></pre>
+</li>
+</ul>
 
             </div>
 
