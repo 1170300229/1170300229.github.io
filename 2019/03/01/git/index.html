@@ -191,6 +191,9 @@
 
     <span class="token function">git</span> log （--prety<span class="token operator">=</span>oneline<span class="token punctuation">)</span>
     /*查看修改日志*/
+
+    <span class="token function">git</span> log --graph --pretty<span class="token operator">=</span>oneline --abbrev-commit
+    /*图形化查看分支*/
 </code></pre>
 <h3 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h3><p>&emsp;&emsp;Git的版本控制相当于将不同的提交版本抽象为节点，HEAD指针指指向当前版本的节点，创建新节点，回退，FF模式下的合并只移动HEAD指针，所以非常快。</p>
 <pre class=" language-bash"><code class="language-bash">    <span class="token function">git</span> reset --hard HEAD~<span class="token punctuation">(</span>数字x<span class="token punctuation">)</span>
