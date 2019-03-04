@@ -241,7 +241,7 @@
 <p>&emsp;&emsp;从远程仓库克隆，下到自己的电脑上作为一个文件夹</p>
 <pre class=" language-bash"><code class="language-bash">    <span class="token function">git</span> clone git@github.com:用户名/仓库名.git
 </code></pre>
-<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>&emsp;&emsp;由于不完整的代码会给团队开发带来困难，破坏原来已经开发的东西很不划算，每个人在开发的时候会创建一个新的分支，在新的分支上开发完成之后再将自己的分支合并到主分支上。master分支最稳定，用于发布新版本，dev分支是开发的总分支，不同的人开发完成后将自己的分支合并到dev分支上，完成测试后再合并到master分支上</p>
+<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>&emsp;&emsp;由于不完整的代码会给团队开发带来困难，破坏原来已经开发的东西很不划算，每个人在开发的时候会创建一个新的分支，在新的分支上开发完成之后再将自己的分支合并到主分支上。master分支最稳定，用于发布新版本，dev分支是开发的总分支，不同的人开发完成后将自己的分支合并到dev分支上，完成测试后再合并到master分支上.</p>
 <p><img src="/2019/03/01/git/4.png" alt="开发模式"></p>
 <p>&emsp;&emsp;git采用指针的形式，可以很快地创建和合并分支。创建分支dev，并且移动到dev上的命令</p>
 <pre class=" language-bash"><code class="language-bash">    <span class="token function">git</span> checkout -b dev
