@@ -160,22 +160,26 @@
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>&emsp;&emsp;又到了人民群众喜闻乐见的<del>骂街</del>发表意见的环节<br>&emsp;&emsp;鬼™知道我经历了什么<br>&emsp;&emsp;原来传说是真的🙂，大二专业课老师真的会默认windows是你开发出来的<br>&emsp;&emsp;这篇主要记录了实验中的一点java小知识</p>
 <h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p>&emsp;&emsp;开始是为了装Hexo的，装了Git，然后JavaIDE是Netbeens。这里惨痛教训，好像Netbeens和Eclipse的文本编辑的默认中文编码方式不一样，Netbeens是GBK，Eclipse是UTF-8，结果实验做完后发现用NetBeens写的P1的代码注释到Eclipse里面变成乱码了，但是使用“重启试试”之后又正常了…<br>&emsp;&emsp;新版的Eclipse叫Oxygen，Git的log按q退出查看<br>&emsp;&emsp;Eclipse中文语言包被我装崩掉了，开始界面变成了欢迎来到Errorlipse<br>&emsp;&emsp;<a href="https://github.com/ComputerScienceHIT/Lab1-1170300229" target="_blank" rel="noopener">点这里进入实验一仓库</a></p>
 <h3 id="P1"><a href="#P1" class="headerlink" title="P1"></a>P1</h3><p>&emsp;&emsp;大致目标是写一个函数判断幻方，然后还要看看那个生成幻方的函数是怎么生成幻方的<br>&emsp;&emsp;主要是帮助回忆Java，这里有Tips</p>
-<ol>
-<li>Java字符串中”\“是转义符，在写相对路径的时候可以这样写”.\\src\\P1\\txt\\1.txt”，我日打字到一半发现这个在Markdown里也是转义！！！上面那串字符打了三个\</li>
-<li>读文件的大致格式是<pre class=" language-java"><code class="language-java"> <span class="token keyword">try</span> <span class="token punctuation">{</span>
-     BufferedReader reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token comment" spellcheck="true">// read something</span>
-     reader<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">FileNotFoundException</span> ex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-     <span class="token comment" spellcheck="true">// handle exception</span>
- <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-     <span class="token comment" spellcheck="true">// handle exception</span>
- <span class="token punctuation">}</span>
+<blockquote>
+<p>Java字符串中”\“是转义符，在写相对路径的时候可以这样写”.\\src\\P1\\txt\\1.txt”，我日打字到一半发现这个在Markdown里也是转义！！！上面那串字符打了三个\</p>
+</blockquote>
+<blockquote>
+<p>读文件的大致格式是</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        BufferedReader reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// read something</span>
+        reader<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">FileNotFoundException</span> ex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// handle exception</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// handle exception</span>
+    <span class="token punctuation">}</span>
 </code></pre>
-</li>
-<li>string.split是会产生空字符串的！</li>
-<li>有时间的话学学正则表达式</li>
-</ol>
+<p>string.split是会产生空字符串的！</p>
+</blockquote>
+<blockquote>
+<p>有时间的话学学正则表达式</p>
+</blockquote>
 <p>&emsp;&emsp;学到了，如何做出一个幻方（奇数边长），从中间最上面的那个元素开始，每次填完一条对角线之后向下继续填下一条对角线，直到填满</p>
 <p><img src="/2019/03/06/scLab1/0.jpg" alt="幻方构造"></p>
 <h3 id="P2"><a href="#P2" class="headerlink" title="P2"></a>P2</h3><p>&emsp;&emsp;用乌龟画画<br>&emsp;&emsp;Turtle是一个类，里面有turn和forward两种方法，控制在二维平面上移动，走过的痕迹来画画<br>&emsp;&emsp;最坑爹的应该还是那个凸包了，因为Java里面调用sort巨麻烦，只好手动冒泡，Graham的主要思想还是按极角排序然后用叉积判断答案栈顶和栈顶下面那个元素和新加进来的点的左右关系<br>&emsp;&emsp;最后自己画了个分形Julia集！原来分形就是用Matlab在画布上描点</p>
