@@ -187,24 +187,27 @@
 <h3 id="P2"><a href="#P2" class="headerlink" title="P2"></a>P2</h3><p>&emsp;&emsp;用乌龟画画<br>&emsp;&emsp;Turtle是一个类，里面有turn和forward两种方法，控制在二维平面上移动，走过的痕迹来画画<br>&emsp;&emsp;最坑爹的应该还是那个凸包了，因为Java里面调用sort巨麻烦，只好手动冒泡，Graham的主要思想还是按极角排序然后用叉积判断答案栈顶和栈顶下面那个元素和新加进来的点的左右关系<br>&emsp;&emsp;最后自己画了个分形Julia集！原来分形就是用Matlab在画布上描点</p>
 <p><img src="/2019/03/06/scLab1/1.jpg" alt="分形Julia集"></p>
 <h3 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h3><p>&emsp;&emsp;主要好像是要写BFS和JUnit测试<br>&emsp;&emsp;目前我所了解的JUnit测试</p>
-<ol>
-<li><p>想快速入门直接看仓库里的代码，主要是assert系列函数的使用</p>
-<pre class=" language-java"><code class="language-java"> <span class="token annotation punctuation">@Test</span> <span class="token comment" spellcheck="true">// 要标注</span>
- <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testFunction</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 我写的测试里面就用了这三个...</span>
-     <span class="token function">assertFalse</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token function">assertTrue</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
-     <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 目标值，表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token punctuation">}</span>
+<blockquote>
+<p>想快速入门直接看仓库里的代码，主要是assert系列函数的使用</p>
+</blockquote>
+<pre class=" language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span> <span class="token comment" spellcheck="true">// 要标注</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testFunction</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 我写的测试里面就用了这三个...</span>
+        <span class="token function">assertFalse</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertTrue</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertEquals</span><span class="token punctuation">(</span><span class="token string">"提示信息"</span><span class="token punctuation">,</span> 目标值，表达式<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
- <span class="token annotation punctuation">@Test</span><span class="token punctuation">(</span>expeced <span class="token operator">=</span> Exception<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
- <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testEnable</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-     <span class="token comment" spellcheck="true">// Exception是要检测的异常</span>
- <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Test</span><span class="token punctuation">(</span>expeced <span class="token operator">=</span> Exception<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testEnable</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// Exception是要检测的异常</span>
+    <span class="token punctuation">}</span>
 </code></pre>
-</li>
-<li>自己造数据然后根据跑出来的结果和自己的手动结果对一下看符不符合</li>
-<li>在工程项目上面右键 -&gt; 构建路径 -&gt; 添加库 -&gt; 添加JUnit4</li>
-</ol>
+<blockquote>
+<p>自己造数据然后根据跑出来的结果和自己的手动结果对一下看符不符合</p>
+</blockquote>
+<blockquote>
+<p>在工程项目上面右键 -&gt; 构建路径 -&gt; 添加库 -&gt; 添加JUnit4</p>
+</blockquote>
 <h3 id="P4"><a href="#P4" class="headerlink" title="P4"></a>P4</h3><p>&emsp;&emsp;学Java新类最快的方法是直接看代码补全里面的说明！是直接看代码补全里面的说明！是直接看代码补全里面的说明！<br>&emsp;&emsp;抽象方法（函数）是只有声明没有实现的方法，抽象类是至少包含一个抽象方法的的类，接口是所有方法都是抽象方法的类<br>&emsp;&emsp;abstract是声明抽象的关键字，extends继承来实现未实现的方法，implements声明实现接口，一个类只能继承一个类，但可以实现多个接口<br>&emsp;&emsp;主要是Collections类的使用姿势<br>&emsp;&emsp;Set是一个抽象类，不能实例化，但是抽象接口的类作为一个参数传入的时候是可以直接对它操作的，Set的主要实现有两种，一种是HashSet，另一种是TreeSet</p>
 <pre class=" language-java"><code class="language-java">    HashSet<span class="token operator">&lt;</span>T<span class="token operator">></span> testSet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -259,7 +262,7 @@
         Collections<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>test<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">classComparator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 </code></pre>
-<p>&emsp;&esmp;String的null和””是有区别的！String访问某个字符要用charAt(index)函数</p>
+<p>&emsp;&emsp;String的null和””是有区别的！String访问某个字符要用charAt(index)函数</p>
 <pre class=" language-java"><code class="language-java">    String ans <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
     ans <span class="token operator">+=</span> <span class="token string">"a"</span><span class="token punctuation">;</span>
     System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ans<span class="token punctuation">)</span><span class="token punctuation">;</span>
