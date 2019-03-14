@@ -287,7 +287,28 @@
     <span class="token comment" spellcheck="true">// 结果是</span>
     <span class="token comment" spellcheck="true">// z</span>
 </code></pre>
-<p>&emsp;&emsp;String的toLowerCase函数是可以忽略string里面的非字母字符的，只把一个string里面的所有大写字母转为小写字母</p>
+<p>&emsp;&emsp;String的toLowerCase函数是可以忽略string里面的非字母字符的，只把一个string里面的所有大写字母转为小写字母<br>&emsp;&emsp;这里加一个，String的split函数的行为非常奇怪！</p>
+<pre class=" language-java"><code class="language-java">    String now <span class="token operator">=</span> <span class="token string">"abc@edf"</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>String i <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"@"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"->"</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/* 结果会是
+    -> abc
+    -> edf
+    */</span>
+
+    String now <span class="token operator">=</span> <span class="token string">"@abc@edf@@"</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>String i <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"@"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"->"</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/* 结果会是
+    ->
+    ->abc
+    ->edf
+
+    更加奇怪的是now.split("@")[0]即不是""也不是null
+    这种现象只会出现在第一个非空被分割的子字符串前面
+    在P4的Extract中我只好用now.split("@").length == 0来判断这种情况
+    */</span>
+</code></pre>
 
             </div>
 
