@@ -152,19 +152,119 @@
 
         <div id="main">
             <div class="post_page_title_img" style="height: 25rem;background-image: url(/thumbnailImg/scLab2.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;">
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2>软件构造实验一</h2></a>
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2>软件构造实验二</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
                 <h1 id="软件构造实验二"><a href="#软件构造实验二" class="headerlink" title="软件构造实验二"></a>软件构造实验二</h1><hr>
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>&emsp;&emsp;哈尔滨某高校大学生惨遭六名教授轮流布置作业和实验</p>
-<h3 id="P1"><a href="#P1" class="headerlink" title="P1"></a>P1</h3><p>&emsp;&emsp;</p>
+<h3 id="P1"><a href="#P1" class="headerlink" title="P1"></a>P1</h3><p>&emsp;&emsp;Eclipse的配置相关，直接点文字进去就有教程，<a href="https://blog.csdn.net/u013521296/article/details/78299525" target="_blank" rel="noopener">安装中文插件(会影响一些内部代码显示)</a>，<a href="https://blog.csdn.net/qq_36698213/article/details/78564693" target="_blank" rel="noopener">Eclipse开启全键触发代码补全</a>，<a href="https://blog.csdn.net/wang_chuan_hao/article/details/86561029" target="_blank" rel="noopener">去除空格触发补全问题，需要下载对应版本的Eclipse的SDK版本，百度一下EclipseSDK吧</a>，<a href="https://www.cnblogs.com/niejianqiang/p/6551465.html" target="_blank" rel="noopener">开启assert功能</a>，<a href="https://blog.csdn.net/luxiangzhou/article/details/79244695" target="_blank" rel="noopener">Eclipse各种小图标的意义</a>，那个在去除空格触发补全问题的时候，要把生成的jar包塞到C:\users\.p2文件夹下，不知道为什么在安装文件夹\eclipse\plugins莫得用<br>&emsp;&emsp;现在来解释为了写P1要搞清楚的一大坨概念</p>
+<h4 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h4><p>&emsp;&emsp;主要来源是<a href="https://www.cnblogs.com/liqiuhao/p/8688759.html" target="_blank" rel="noopener">神仙学长</a>（点击神仙学长跳进去看神仙），下面都是我的通俗理解（仅针对实验的理解），严格定义请参考学长<br><strong>使用者(client)/实现者</strong><br>&emsp;&emsp;实现者，即编写某个类的代码的人，下面文章中我们都是以实现者的视角来说明，使用者即客户端，即使用你的类的人，可能是其他根本不知道你写的类的内部实现内容的人，在这里ADT在Java中的具体表示就是一个类<br><strong>创建者/生产者/观察者/改造者</strong><br>&emsp;&emsp;创建者就是java类中的构造函数，生产者则应该是根据外界要求返回与这个类相关的某个操作的结果（toString之类的），观察者是能获得内部成员变量的函数（getName之类的），改造者则应该是能修改成员变量的函数<br><strong>不变量</strong><br>&emsp;&emsp;就像java中某个类能保护自己的成员变量不被除自己以外的类修改，private只是一种不完美的方法，如下的代码，由于传入的参数实际上是使用者提供的，使用者可以通过修改这些参数来操控内部成员变量</p>
+<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
+    * This immutable data type represents a tweet from Twitter.
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Tweet</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> String author<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> String text<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> Date timestamp<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Make a Tweet.
+     * @param author    Twitter user who wrote the tweet
+     * @param text      text of the tweet
+     * @param timestamp date/time when the tweet was sent
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">Tweet</span><span class="token punctuation">(</span>String author<span class="token punctuation">,</span> String text<span class="token punctuation">,</span> Date timestamp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> author<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>text <span class="token operator">=</span> text<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>timestamp <span class="token operator">=</span> timestamp<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/*一段使用者代码*/</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Tweet <span class="token function">retweetLater</span><span class="token punctuation">(</span>Tweet t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Date d <span class="token operator">=</span> t<span class="token punctuation">.</span><span class="token function">getTimestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        d<span class="token punctuation">.</span><span class="token function">setHours</span><span class="token punctuation">(</span>d<span class="token punctuation">.</span><span class="token function">getHours</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 操纵内部成员变量</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Tweet</span><span class="token punctuation">(</span><span class="token string">"rbmllr"</span><span class="token punctuation">,</span> t<span class="token punctuation">.</span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+</code></pre>
+<p>&emsp;&emsp;这就是一个典型的<strong>表示暴露 Rep exposure</strong>的例子，上述例子是在使用观察者时候造成的表示暴露，注意还可能会在使用构造者的时候引起表示暴露</p>
+<p><img src="/2019/03/14/scLab2/1.png" alt="表示暴露"></p>
+<p>&emsp;&emsp;为了防止表示暴露，我们还需要<strong>防御性拷贝</strong>来防止使用者的修改，即在传入参数的时候拷贝一份下来，这样使用者的变量和自己的成员变量就是两个完全不同的对象了</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token function">Tweet</span><span class="token punctuation">(</span>String author<span class="token punctuation">,</span> String text<span class="token punctuation">,</span> Date timestamp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> author<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>text <span class="token operator">=</span> text<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>timestamp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>timestamp<span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 构造者中的防御性拷贝</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;最后总的来说，不变量应该满足</p>
 <blockquote>
-<ul>
-<li>1</li>
-<li>2</li>
-</ul>
+<ol>
+<li>被创建者或生产者创建；</li>
+<li>被改造者和观察者保持；</li>
+<li>没有表示暴露。</li>
+</ol>
 </blockquote>
+<p><strong>可变类型的不可变包装</strong></p>
+<blockquote>
+<p>Java的collections类提供了一种有趣的“折中”：不可变包装。<br>Collections.unmodifiableList() 会接收一个（可变）List然后将其包装为一个不可变对象——它的 set(), add(), remove(),等操作都会抛出异常。所以你可以将一个List包装为不可变对象（记得将以前对于List的索引丢掉），然后将它传入其他地方使用。<br>这种方法的缺点就是你只能在运行时获得不可变性，而不是编译时。Java不会在编译的时候对你对“不可变”列表的修改提出警告。但是这总比什么都不做好，所以使用不可变的列表、映射、和集合也是减少bug的好方法。</p>
+</blockquote>
+<p><strong>表示不变量和抽象函数</strong><br>&emsp;&emsp;先介绍抽线域（A)和表示域(R)，简单一点说抽象域就是使用者想要的某种抽象的全体，如下图，使用者想要集合这个抽象概念，那么所有集合就是抽象域。表示域是具体实现的，即用来代表使用者想要的抽象概念的具体变量，如下图用字符串“abc”代表集合{a，b，c}，“abc”就是表示域中的一个元素</p>
+<p><img src="/2019/03/14/scLab2/2.png" alt="抽象域和表示域"></p>
+<p>&emsp;&emsp;抽象函数（AF)就是把表示域中的元素对应到抽象域的函数，表示不变量（RI）就是表示域中那些在有抽象函数值的那些元素组成的集合（当然可以有元素没有抽象函数值，像上图的String “abbc”）</p>
+<p><img src="/2019/03/14/scLab2/3.png" alt="AF &amp; RI"></p>
+<blockquote>
+<p>例如上图中，CharSet这种类型的实现禁止有重复字符，所以 RI(“a”) = true, RI(“ac”) = true, RI(“acb”) = true, 但是 RI(“aa”) = false, RI(“abbc”) = false.其中为假的集合用红色区域表示，合法的（为真）的字符串集合用绿色表示。</p>
+</blockquote>
+<p>&emsp;&emsp;再和实验相关一点，AF就是某个成员变量代表的抽象概念，RI就是对这个成员变量的限制，如下面代码，RI强制要求字符串s中的字符按从小到大来排列以表示集合AF（s），由于AF和RI一般与使用者没有关系，因此多用//来注释，而不是用javadoc来注释（/*<em> </em>/）</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CharSet</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> String s<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// Rep invariant:</span>
+        <span class="token comment" spellcheck="true">//   s[0] &lt;= s[1] &lt;= ... &lt;= s[s.length()-1]</span>
+        <span class="token comment" spellcheck="true">// Abstraction function:</span>
+        <span class="token comment" spellcheck="true">//   AF(s) = {s[i] | 0 &lt;= i &lt; s.length()}</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p><strong>CheckRep</strong><br>&emsp;&emsp;理解了RI就很好理解，这个函数就是用来检查当前成员变量是否满足限制条件的</p>
+<blockquote>
+<p>你应该在每一个创建或者改变表示数据的操作后调用 checkRep() 检查不变量，换句话说，就是在使用创建者、生产者以及改造者之后。<br>虽然说观察者通常不需要使用 checkRep() 进行检查，但这也是一个不错的主意。为什么？因为在每一个操作中调用 checkRep() 检查不变量更能够帮助你捕捉因为表示暴露而带来的bug。<br>&emsp;&emsp;尽量不要在表示用使用null</p>
+</blockquote>
+<p><strong>表示暴露的安全性注解</strong><br>&emsp;&emsp;即说明一下你用了什么方法来防止表示暴露，下面是一个完整的注释的例子</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// Immutable type representing a tweet.</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Tweet</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> String author<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> String text<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Date timestamp<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Rep invariant:</span>
+    <span class="token comment" spellcheck="true">//   author is a Twitter username (a nonempty string of letters, digits, underscores)</span>
+    <span class="token comment" spellcheck="true">//   text.length &lt;= 140</span>
+    <span class="token comment" spellcheck="true">// Abstraction function:</span>
+    <span class="token comment" spellcheck="true">//   AF(author, text, timestamp) = a tweet posted by author, with content text,</span>
+    <span class="token comment" spellcheck="true">//                                 at time timestamp</span>
+    <span class="token comment" spellcheck="true">// Safety from rep exposure:</span>
+    <span class="token comment" spellcheck="true">//   All fields are private;</span>
+    <span class="token comment" spellcheck="true">//   author and text are Strings, so are guaranteed immutable;</span>
+    <span class="token comment" spellcheck="true">//   timestamp is a mutable Date, so Tweet() constructor and getTimestamp()</span>
+    <span class="token comment" spellcheck="true">//        make defensive copies to avoid sharing the rep's Date object with clients.</span>
+
+    <span class="token comment" spellcheck="true">// Operations (specs and method bodies omitted to save space)</span>
+    <span class="token keyword">public</span> <span class="token function">Tweet</span><span class="token punctuation">(</span>String author<span class="token punctuation">,</span> String text<span class="token punctuation">,</span> Date timestamp<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Date <span class="token function">getTimestamp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>ADT的注解到底应该写什么</strong></p>
+<blockquote>
+<p>如上图所示，规格说明在使用者和实现者之间构建起了一道“防火墙”。抽象类型的规格说明（包含操作的说明）应该只关注使用者可见的部分，这包括参数、返回值、可能抛出的异常。例如规格说明需要引用T的值时，它应该是抽象域的值而非表示域。<br>规格说明不应该谈论具体的表示/实现细节，例如表示域里面的值。它应该认为表示本身（私有区域）对于使用者是不可见的，就像是方法里面的局部变量对外部不可见。这也是为什么我们在注解表示不变量和抽象函数的时候使用的是”\“注释而非典型的Javadoc格式。如果我们使用Javadoc注释的话，内部的实现细节会出现在规格说明中，而这会影响表示独立性以及信息隐藏。<br>总结一下上面文章的三个目标<br>    1.远离bug. 一个好的ADT会确保它的不变量为真，因此它们不会被使用者代码中的bug所影响。同时，通过显式的声明和动态检查不变量，我们可以尽早的发现bug，而不是让错误的行为继续下去。<br>    2.易于理解. 表示不变量和抽象函数详细的表述了抽象类型中表示的意义，以及它们是如何联系到抽象值的。<br>    3.可改动. 抽象数据类型分离了抽象域和表示域，这使得实现者可以改动具体实现而不影响使用者的代码。</p>
+</blockquote>
+<p><img src="/2019/03/14/scLab2/4.png" alt="ADT注解"></p>
+<h4 id="我终于开始写实验了"><a href="#我终于开始写实验了" class="headerlink" title="我终于开始写实验了"></a>我终于开始写实验了</h4><p>&emsp;&emsp;</p>
 
             </div>
 
