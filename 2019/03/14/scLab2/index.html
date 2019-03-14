@@ -231,6 +231,14 @@
 <p><strong>CheckRep</strong><br>&emsp;&emsp;理解了RI就很好理解，这个函数就是用来检查当前成员变量是否满足限制条件的</p>
 <blockquote>
 <p>你应该在每一个创建或者改变表示数据的操作后调用 checkRep() 检查不变量，换句话说，就是在使用创建者、生产者以及改造者之后。<br>虽然说观察者通常不需要使用 checkRep() 进行检查，但这也是一个不错的主意。为什么？因为在每一个操作中调用 checkRep() 检查不变量更能够帮助你捕捉因为表示暴露而带来的bug。<br>&emsp;&emsp;尽量不要在表示用使用null</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// Check that the rep invariant is true</span>
+<span class="token comment" spellcheck="true">// *** Warning: this does nothing unless you turn on assertion checking</span>
+<span class="token comment" spellcheck="true">// by passing -enableassertions to Java</span>
+<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">checkRep</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">assert</span> denominator <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">assert</span> <span class="token function">gcd</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">abs</span><span class="token punctuation">(</span>numerator<span class="token punctuation">)</span><span class="token punctuation">,</span> denominator<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
 </blockquote>
 <p><strong>表示暴露的安全性注解</strong><br>&emsp;&emsp;即说明一下你用了什么方法来防止表示暴露，下面是一个完整的注释的例子</p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// Immutable type representing a tweet.</span>
