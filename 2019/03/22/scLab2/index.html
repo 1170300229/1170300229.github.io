@@ -319,7 +319,7 @@
     <span class="token comment" spellcheck="true">// use checkRep in constructor &amp; getMethod</span>
         <span class="token comment" spellcheck="true">// use final modify symbol</span>
 </code></pre>
-<p>&emsp;&emsp;这里其他具体的实现的要求可以看Game中对应函数的SPEC辣，这里就不介绍了。有一点值得注意的是，在写set函数中，当我们要新建一条边加到边集里面去的时候，我们要检查当前边集中是否已经存在新建的边（就是起点和终点相同的边），我们可以用List的contains函数，而List的contains函数中用来比较两个Edge类是否相同的方法是调用equals方法，因此我们要在Edge中重写equals方法，具体如下，注意一定要有@override的标记，否则就没有重写成功</p>
+<p>&emsp;&emsp;这里其他具体的实现的要求可以看Graph中对应函数的SPEC辣，这里就不介绍了。有一点值得注意的是，在写set函数中，当我们要新建一条边加到边集里面去的时候，我们要检查当前边集中是否已经存在新建的边（就是起点和终点相同的边），我们可以用List的contains函数，而List的contains函数中用来比较两个Edge类是否相同的方法是调用equals方法，因此我们要在Edge中重写equals方法，具体如下，注意一定要有@override的标记，否则就没有重写成功</p>
 <pre class=" language-java"><code class="language-java">
     <span class="token comment" spellcheck="true">// 在Edge中重写的equals方法</span>
     <span class="token annotation punctuation">@Override</span>
