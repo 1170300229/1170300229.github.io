@@ -191,7 +191,7 @@
 
 </code></pre>
 <p>&emsp;&emsp;这就是一个典型的<strong>表示暴露 Rep exposure</strong>的例子，上述例子是在使用观察者时候造成的表示暴露，注意还可能会在使用构造者的时候引起表示暴露</p>
-<p><img src="/2019/03/14/scLab2/1.png" alt="表示暴露"></p>
+<p><img src="/2019/03/22/scLab2/1.png" alt="表示暴露"></p>
 <p>&emsp;&emsp;为了防止表示暴露，我们还需要<strong>防御性拷贝</strong>来防止使用者的修改，即在传入参数的时候拷贝一份下来，这样使用者的变量和自己的成员变量就是两个完全不同的对象了</p>
 <pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token function">Tweet</span><span class="token punctuation">(</span>String author<span class="token punctuation">,</span> String text<span class="token punctuation">,</span> Date timestamp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">this</span><span class="token punctuation">.</span>author <span class="token operator">=</span> author<span class="token punctuation">;</span>
@@ -212,9 +212,9 @@
 <p>Java的collections类提供了一种有趣的“折中”：不可变包装。<br>Collections.unmodifiableList() 会接收一个（可变）List然后将其包装为一个不可变对象——它的 set(), add(), remove(),等操作都会抛出异常。所以你可以将一个List包装为不可变对象（记得将以前对于List的索引丢掉），然后将它传入其他地方使用。<br>这种方法的缺点就是你只能在运行时获得不可变性，而不是编译时。Java不会在编译的时候对你对“不可变”列表的修改提出警告。但是这总比什么都不做好，所以使用不可变的列表、映射、和集合也是减少bug的好方法。</p>
 </blockquote>
 <p><strong>表示不变量和抽象函数</strong><br>&emsp;&emsp;先介绍抽线域（A)和表示域(R)，简单一点说抽象域就是使用者想要的某种抽象的全体，如下图，使用者想要集合这个抽象概念，那么所有集合就是抽象域。表示域是具体实现的，即用来代表使用者想要的抽象概念的具体变量，如下图用字符串“abc”代表集合{a，b，c}，“abc”就是表示域中的一个元素</p>
-<p><img src="/2019/03/14/scLab2/2.png" alt="抽象域和表示域"></p>
+<p><img src="/2019/03/22/scLab2/2.png" alt="抽象域和表示域"></p>
 <p>&emsp;&emsp;抽象函数（AF)就是把表示域中的元素对应到抽象域的函数，表示不变量（RI）就是表示域中那些在有抽象函数值的那些元素组成的集合（当然可以有元素没有抽象函数值，像上图的String “abbc”）</p>
-<p><img src="/2019/03/14/scLab2/3.png" alt="AF &amp; RI"></p>
+<p><img src="/2019/03/22/scLab2/3.png" alt="AF &amp; RI"></p>
 <blockquote>
 <p>例如上图中，CharSet这种类型的实现禁止有重复字符，所以 RI(“a”) = true, RI(“ac”) = true, RI(“acb”) = true, 但是 RI(“aa”) = false, RI(“abbc”) = false.其中为假的集合用红色区域表示，合法的（为真）的字符串集合用绿色表示。</p>
 </blockquote>
@@ -271,8 +271,8 @@
 <blockquote>
 <p>如上图所示，规格说明在使用者和实现者之间构建起了一道“防火墙”。抽象类型的规格说明（包含操作的说明）应该只关注使用者可见的部分，这包括参数、返回值、可能抛出的异常。例如规格说明需要引用T的值时，它应该是抽象域的值而非表示域。<br>规格说明不应该谈论具体的表示/实现细节，例如表示域里面的值。它应该认为表示本身（私有区域）对于使用者是不可见的，就像是方法里面的局部变量对外部不可见。这也是为什么我们在注解表示不变量和抽象函数的时候使用的是”\“注释而非典型的Javadoc格式。如果我们使用Javadoc注释的话，内部的实现细节会出现在规格说明中，而这会影响表示独立性以及信息隐藏。<br>总结一下上面文章的三个目标<br>    1.远离bug. 一个好的ADT会确保它的不变量为真，因此它们不会被使用者代码中的bug所影响。同时，通过显式的声明和动态检查不变量，我们可以尽早的发现bug，而不是让错误的行为继续下去。<br>    2.易于理解. 表示不变量和抽象函数详细的表述了抽象类型中表示的意义，以及它们是如何联系到抽象值的。<br>    3.可改动. 抽象数据类型分离了抽象域和表示域，这使得实现者可以改动具体实现而不影响使用者的代码。</p>
 </blockquote>
-<p><img src="/2019/03/14/scLab2/4.png" alt="ADT注解"></p>
-<h4 id="我终于开始写实验了"><a href="#我终于开始写实验了" class="headerlink" title="我终于开始写实验了"></a>我终于开始写实验了</h4><p>&emsp;&emsp;</p>
+<p><img src="/2019/03/22/scLab2/4.png" alt="ADT注解"></p>
+<h4 id="我终于开始写实验了"><a href="#我终于开始写实验了" class="headerlink" title="我终于开始写实验了"></a>我终于开始写实验了</h4><p>&emsp;&emsp;先来看实验要求，<br><img src="/2019/03/22/scLab2/assets/markdown-img-paste-20190322102359629.png" alt></p>
 
             </div>
 
@@ -335,8 +335,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://1170300229.github.io/2019/03/14/scLab2/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://1170300229.github.io/2019/03/14/scLab2/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://1170300229.github.io/2019/03/22/scLab2/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://1170300229.github.io/2019/03/22/scLab2/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
