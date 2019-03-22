@@ -379,7 +379,9 @@
 </code></pre>
 <p>&emsp;&emsp;problem3中把所有出现String的地方改成泛型（L）就好了，如果有问题根据编译错误的那个小红叉叉提示的信息（或者直接在红色波浪线处按Ctrl + F1）修改就可以了<br>&emsp;&emsp;problem4就是调用前面已经实现的Graph实现一个改变输入的程序，大致意思是输入一个txt文件（里面有一首或者多首诗），根据诗建立一个Graph，有向边连接两个相邻的词，然后根据这个图修改输入的字符串，具体的要求<a href="http://web.mit.edu/6.031/www/sp17/psets/ps2/doc/index.html?poet/GraphPoet.html" target="_blank" rel="noopener">戳我</a>。<br>&emsp;&emsp;我把Do not go gentle into that good night当作语料库输进去了！</p>
 <h3 id="P2"><a href="#P2" class="headerlink" title="P2"></a>P2</h3><p>&emsp;&emsp;其实吧，P2代码我真的一共只写了10min，JUnit的测试直接从Lab1粘贴过来就好</p>
-<h3 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h3><p>&emsp;&emsp;是时候上图了<br><img src="/2019/03/22/scLab2/8.png" alt="P3"><br>&emsp;&emsp;Game是接口，MyChessAndGoGame是客户端代码，其他的都是类（泪）。<br>&emsp;&emsp;大致思想是，游戏得有个棋盘吧（Board），棋盘上面得有位置（Position）吧，Position就是一个mutable的类型，里面只有一个成员变量就是棋子（Pieces），如果位置上莫得棋子pieces就是null，board和position构成了独立的一部分。然后一部分就是由玩家（Player）和棋子（Pieces）组成的一部分，每个棋子有一个玩家，每个玩家有名字和自己的日志（根据要求游戏结束时要输出日志）。Action中只有静态方法，没有实例方法或者成员变量，每次进行动作的时候把Board，Player，Pieces和坐标等参数塞进Actino的方法里面，Action里面的方法就能帮你改变棋盘的状态，增加玩家的日志，返回true（成功操作）或者false（不成功操作），如果是false还要输出错误信息<br><img src="/2019/03/22/scLab2/9.png" alt="P3示意图"><br>&emsp;&emsp;在具体实现的时候Game只是一个接口，gameChess和gameGo实现了Game，并且在各自的构造器中完成了初始化的工作。</p>
+<h3 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h3><p>&emsp;&emsp;是时候上图了<br><img src="/2019/03/22/scLab2/8.png" alt="P3"><br>&emsp;&emsp;Game是接口，MyChessAndGoGame是客户端代码，其他的都是类（泪）。<br>&emsp;&emsp;大致思想是，游戏得有个棋盘吧（Board），棋盘上面得有位置（Position）吧，Position就是一个mutable的类型，里面只有一个成员变量就是棋子（Pieces），如果位置上莫得棋子pieces就是null，board和position构成了独立的一部分。然后一部分就是由玩家（Player）和棋子（Pieces）组成的一部分，每个棋子有一个玩家，每个玩家有名字和自己的日志（根据要求游戏结束时要输出日志）。Action中只有静态方法，没有实例方法或者成员变量，每次进行动作的时候把Board，Player，Pieces和坐标等参数塞进Actino的方法里面，Action里面的方法就能帮你改变棋盘的状态，增加玩家的日志，返回true（成功操作）或者false（不成功操作），如果是false还要输出错误信息</p>
+<p><img src="/2019/03/22/scLab2/9.PNG" alt="P3示意图"></p>
+<p>&emsp;&emsp;在具体实现的时候Game只是一个接口，gameChess和gameGo实现了Game，并且在各自的构造器中完成了初始化的工作。</p>
 
             </div>
 
