@@ -156,7 +156,87 @@
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                
+                <h1 id="软件构造实验三"><a href="#软件构造实验三" class="headerlink" title="软件构造实验三"></a>软件构造实验三</h1><hr>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>&emsp;&emsp;软件构造来取我狗命</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><p><strong><em>开闭原则</em></strong><br>&emsp;&emsp;在OOP设计模式中有<a href="http://www.uml.org.cn/sjms/201211023.asp" target="_blank" rel="noopener">六大原则</a>（点六大原则有惊喜），开闭原则是其中一个，同时也是一种非常重要的原则，对我们理解下面的工厂方法正式定义是<br>&emsp;&emsp;一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。<br>&emsp;&emsp;问题由来：在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。<br>&emsp;&emsp;解决方案：当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。在java中这种扩展一般通过继承来实现<br>&emsp;&emsp;用一个简单的例子来说（<a href="https://www.jianshu.com/p/6c8a9611b38b" target="_blank" rel="noopener">实例来源</a>）：现在我们有一个任务是计算多片农田的面积，最开始每片农田都是矩形的，我们写出了如下代码</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">double</span> length<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> <span class="token keyword">double</span> height<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// getters/setters ...</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AreaManager</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">calculateArea</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Rectangle<span class="token operator">></span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">double</span> area <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>Rectangle rect <span class="token operator">:</span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                area <span class="token operator">+=</span> <span class="token punctuation">(</span>rect<span class="token punctuation">.</span><span class="token function">getLength</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> rect<span class="token punctuation">.</span><span class="token function">getHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> area<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;然后按照通常的剧本，客户改需求了，出现了圆形的农田，于是我们开始改</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token punctuation">{</span>
+        <span class="token keyword">private</span> <span class="token keyword">double</span> radius<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// getters/setters ...</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AreaManager</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">calculateArea</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Object<span class="token operator">></span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">double</span> area <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>Object shape <span class="token operator">:</span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>shape <span class="token keyword">instanceof</span> <span class="token class-name">Rectangle</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    Rectangle rect <span class="token operator">=</span> <span class="token punctuation">(</span>Rectangle<span class="token punctuation">)</span>shape<span class="token punctuation">;</span>
+                    area <span class="token operator">+=</span> <span class="token punctuation">(</span>rect<span class="token punctuation">.</span><span class="token function">getLength</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> rect<span class="token punctuation">.</span><span class="token function">getHeight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>shape <span class="token keyword">instanceof</span> <span class="token class-name">Circle</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    Circle circle <span class="token operator">=</span> <span class="token punctuation">(</span>Circle<span class="token punctuation">)</span>shape<span class="token punctuation">;</span>
+                    area <span class="token operator">+=</span> <span class="token punctuation">(</span>circle<span class="token punctuation">.</span><span class="token function">getRadius</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> cirlce<span class="token punctuation">.</span><span class="token function">getRadius</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> Math<span class="token punctuation">.</span>PI<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"Shape not supported"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> area<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;发现了问题没有，以后每当多出现一种形状，我们都要去修改AreaManager的代码。在java中，修改意味着重新做代码评审和单元测试，这是十分麻烦的事情。<br>&emsp;&emsp;让我们来用开闭原则来重新看一下这个问题。我们要能够支持扩展，并且禁止修改。我们可以定义一个叫Shape的接口，在接口里面定义我们实际需要的计算面积的方法。同时把AreaManager传入的ArrayList的参数设置为Shape</p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Shape</span> <span class="token punctuation">{</span>
+        <span class="token keyword">double</span> <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">{</span>
+       <span class="token keyword">private</span> <span class="token keyword">double</span> length<span class="token punctuation">;</span>
+       <span class="token keyword">private</span> <span class="token keyword">double</span> height<span class="token punctuation">;</span>
+       <span class="token comment" spellcheck="true">// getters/setters ...</span>
+
+       <span class="token annotation punctuation">@Override</span>
+       <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           <span class="token keyword">return</span> <span class="token punctuation">(</span>length <span class="token operator">*</span> height<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token keyword">implements</span> <span class="token class-name">Shape</span> <span class="token punctuation">{</span>
+       <span class="token keyword">private</span> <span class="token keyword">double</span> radius<span class="token punctuation">;</span>
+       <span class="token comment" spellcheck="true">// getters/setters ...</span>
+
+       <span class="token annotation punctuation">@Override</span>
+       <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+           <span class="token keyword">return</span> <span class="token punctuation">(</span>radius <span class="token operator">*</span> radius <span class="token operator">*</span> Math<span class="token punctuation">.</span>PI<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AreaManager</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">calculateArea</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Shape<span class="token operator">></span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">double</span> area <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>Shape shape <span class="token operator">:</span> shapes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                area <span class="token operator">+=</span> shape<span class="token punctuation">.</span><span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">return</span> area<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;我们可以发现，在以后如果需要增加新的形状我们只需要做扩展：增加新的Shape的实现类，而不需要去修改AreaManager的源代码。这就符合开闭原则了，在某种意义上这也是java中接口的来源。<br><strong><em>工厂模式</em></strong><br>&emsp;&emsp;工厂模式是一种设计模式，他们的共同点就是都避免了直接用new来创建需要的对象，而是通过调用某个方法来创建一个对象，这样的好处是可以在使用者的层面隐藏具体类的实现细节，典型的例子是Lab2中Graph接口中的emptyInstance方法。工厂模式中一共有三个概念，静态工厂模式（简单工厂模式），工厂方法模式，抽象工厂模式，下面三个都有例子，<a href="https://www.cnblogs.com/zailushang1996/p/8601808.html" target="_blank" rel="noopener">点我跳进去</a><br>&emsp;&emsp;静态工厂模式，典型特征就是有一个静态方法，根据输入的参数创建不同的对象并返回给使用者<br>&emsp;&emsp;工厂方法模式和抽象工厂模式都是如下的结构，区别在于工厂接口中的方法不同</p>
+<p><img src="/2019/03/31/scLab3/1.jpg" alt="工厂模式接口"></p>
+<p>&emsp;&emsp;工厂方法中是返回的同一个产品等级的对象，抽象方法则返回的是产品族。同一个产品等级可以理解为是同一个接口的不同的实现类，产品族则是不同的接口的下的不同的实现类，但是这两个实现类有某些共性，如下图，其中Car_A1和Car_A2属于一个产品等级，Car_A1和Car_B1则属于同一个产品族，因为他们两个都是2.0排量的。</p>
+<p><img src="/2019/03/31/scLab3/2.jpg" alt="产品等级和产品族"></p>
+
             </div>
 
             <!-- Post Comments -->
