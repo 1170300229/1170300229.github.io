@@ -158,7 +158,7 @@
             <div class="typo" style="padding: 3rem;">
                 <h1 id="软件构造实验三"><a href="#软件构造实验三" class="headerlink" title="软件构造实验三"></a>软件构造实验三</h1><hr>
 <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>&emsp;&emsp;软件构造来取我狗命</p>
-<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><p><strong><em>开闭原则</em></strong><br>&emsp;&emsp;在OOP设计模式中有<a href="http://www.uml.org.cn/sjms/201211023.asp" target="_blank" rel="noopener">六大原则</a>（点六大原则有惊喜），开闭原则是其中一个，同时也是一种非常重要的原则，对我们理解下面的工厂方法正式定义是<br>&emsp;&emsp;一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。<br>&emsp;&emsp;问题由来：在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。<br>&emsp;&emsp;解决方案：当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。在java中这种扩展一般通过继承来实现<br>&emsp;&emsp;用一个简单的例子来说（<a href="https://www.jianshu.com/p/6c8a9611b38b" target="_blank" rel="noopener">实例来源</a>）：现在我们有一个任务是计算多片农田的面积，最开始每片农田都是矩形的，我们写出了如下代码</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><p><strong>开闭原则</strong><br>&emsp;&emsp;在OOP设计模式中有<a href="http://www.uml.org.cn/sjms/201211023.asp" target="_blank" rel="noopener">六大原则</a>（点六大原则有惊喜），开闭原则是其中一个，同时也是一种非常重要的原则，对我们理解下面的工厂方法很重要。正式定义是<br>&emsp;&emsp;一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。<br>&emsp;&emsp;问题由来：在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会给旧代码中引入错误，也可能会使我们不得不对整个功能进行重构，并且需要原有代码经过重新测试。<br>&emsp;&emsp;解决方案：当软件需要变化时，尽量通过扩展软件实体的行为来实现变化，而不是通过修改已有的代码来实现变化。在java中这种扩展一般通过继承来实现<br>&emsp;&emsp;用一个简单的例子来说（<a href="https://www.jianshu.com/p/6c8a9611b38b" target="_blank" rel="noopener">实例来源</a>）：现在我们有一个任务是计算多片农田的面积，最开始每片农田都是矩形的，我们写出了如下代码</p>
 <pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
         <span class="token keyword">private</span> <span class="token keyword">double</span> length<span class="token punctuation">;</span>
         <span class="token keyword">private</span> <span class="token keyword">double</span> height<span class="token punctuation">;</span>
@@ -232,10 +232,150 @@
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 </code></pre>
-<p>&emsp;&emsp;我们可以发现，在以后如果需要增加新的形状我们只需要做扩展：增加新的Shape的实现类，而不需要去修改AreaManager的源代码。这就符合开闭原则了，在某种意义上这也是java中接口的来源。<br><strong><em>工厂模式</em></strong><br>&emsp;&emsp;工厂模式是一种设计模式，他们的共同点就是都避免了直接用new来创建需要的对象，而是通过调用某个方法来创建一个对象，这样的好处是可以在使用者的层面隐藏具体类的实现细节，典型的例子是Lab2中Graph接口中的emptyInstance方法。工厂模式中一共有三个概念，静态工厂模式（简单工厂模式），工厂方法模式，抽象工厂模式，下面三个都有例子，<a href="https://www.cnblogs.com/zailushang1996/p/8601808.html" target="_blank" rel="noopener">点我跳进去</a><br>&emsp;&emsp;静态工厂模式，典型特征就是有一个静态方法，根据输入的参数创建不同的对象并返回给使用者<br>&emsp;&emsp;工厂方法模式和抽象工厂模式都是如下的结构，区别在于工厂接口中的方法不同</p>
+<p>&emsp;&emsp;我们可以发现，在以后如果需要增加新的形状我们只需要做扩展：增加新的Shape的实现类，而不需要去修改AreaManager的源代码。这就符合开闭原则了，在某种意义上这也是java中接口的来源。<br><strong>工厂模式</strong><br>&emsp;&emsp;工厂模式是一种设计模式，他们的共同点就是都避免了直接用new来创建需要的对象，而是通过调用某个方法来创建一个对象，这样的好处是可以在使用者的层面隐藏具体类的实现细节，典型的例子是Lab2中Graph接口中的emptyInstance方法。工厂模式中一共有三个概念，静态工厂模式（简单工厂模式），工厂方法模式，抽象工厂模式，下面三个都有例子，<a href="https://www.cnblogs.com/zailushang1996/p/8601808.html" target="_blank" rel="noopener">点我跳进去</a><br>&emsp;&emsp;静态工厂模式，典型特征就是有一个静态方法，根据输入的参数创建不同的对象并返回给使用者<br>&emsp;&emsp;工厂方法模式和抽象工厂模式都是如下的结构，区别在于工厂接口中的方法不同</p>
 <p><img src="/2019/03/31/scLab3/1.jpg" alt="工厂模式接口"></p>
 <p>&emsp;&emsp;工厂方法中是返回的同一个产品等级的对象，抽象方法则返回的是产品族。同一个产品等级可以理解为是同一个接口的不同的实现类，产品族则是不同的接口的下的不同的实现类，但是这两个实现类有某些共性，如下图，其中Car_A1和Car_A2属于一个产品等级，Car_A1和Car_B1则属于同一个产品族，因为他们两个都是2.0排量的。</p>
 <p><img src="/2019/03/31/scLab3/2.jpg" alt="产品等级和产品族"></p>
+<p><strong>builder模式</strong><br>&emsp;&emsp;<a href="https://blog.csdn.net/superdangbo/article/details/80308820" target="_blank" rel="noopener">点这里看原版</a>，主要是一种构造器技术。有时候构造一个类时可选的传入参数太多，如果用重载构造器的方法来写的话太复杂并且太难读。下面例子<a href="https://www.jianshu.com/p/1878ac84fddf" target="_blank" rel="noopener">来源</a></p>
+<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LoginBean</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> uid<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String mobile<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String portrait<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String realName<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">LoginBean</span><span class="token punctuation">(</span>String id<span class="token punctuation">,</span><span class="token keyword">int</span> uid<span class="token punctuation">,</span>String name<span class="token punctuation">,</span>String mobile<span class="token punctuation">,</span>Strin
+                               portrait，String realName<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                  <span class="token keyword">this</span><span class="token punctuation">.</span>id<span class="token operator">=</span>id<span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//此处省略</span>
+                  <span class="token keyword">this</span><span class="token punctuation">.</span>realName<span class="token operator">=</span>realName<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;还有一种技术叫JavaBeans模式，写一个传入必要参数的构造器，然后写set方法来设置各可选参数，但是这样安全性较差，不能防止在set过程中参数发生变化</p>
+<pre class=" language-java"><code class="language-java">    LoginBean bean <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoginBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bean<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span>xxx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//此处省略</span>
+    bean<span class="token punctuation">.</span><span class="token function">setRealName</span><span class="token punctuation">(</span>xxx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&emsp;&emsp;builder模式是在这个类中写一个内部静态类，一般名字都叫builder，构造时先造一个builder，然后用第二种方式来初始化这个builder，最后把这个builder当传入参数传进类的构造器中，具体可以见下面的例子</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/*要构造的目标类*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> String id<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> String uid<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/*builer类*/</span>
+  <span class="token keyword">private</span> <span class="token function">Test</span><span class="token punctuation">(</span>Builder builder<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> builder<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+     <span class="token keyword">this</span><span class="token punctuation">.</span>uid <span class="token operator">=</span> builder<span class="token punctuation">.</span>uid<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Builder</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String uid<span class="token punctuation">;</span>
+
+ <span class="token keyword">public</span> Builder <span class="token function">setId</span><span class="token punctuation">(</span>String id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+       <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+ <span class="token keyword">public</span> Builder <span class="token function">setUid</span><span class="token punctuation">(</span>String uid<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>uid <span class="token operator">=</span> uid<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ <span class="token keyword">public</span> Test <span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Test</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+   <span class="token annotation punctuation">@Override</span>
+   <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token string">"Builder{"</span> <span class="token operator">+</span>
+        <span class="token string">"id='"</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+       <span class="token string">", uid='"</span> <span class="token operator">+</span> uid <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+           <span class="token string">'}'</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+ <span class="token annotation punctuation">@Override</span>
+ <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">"Test{"</span> <span class="token operator">+</span>
+       <span class="token string">"id='"</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+       <span class="token string">", uid='"</span> <span class="token operator">+</span> uid <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+       <span class="token string">'}'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/*客户端代码*/</span>
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String <span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+ Test test <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Test<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token string">"0"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">setUid</span><span class="token punctuation">(</span><span class="token string">"fadf"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><strong>Iterator模式</strong><br>&emsp;&emsp;<a href="https://www.cnblogs.com/ysw-go/p/5384516.html" target="_blank" rel="noopener">点这里</a>，说的很清楚了，有下面四个角色（模式所需要的类）。</p>
+<p><img src="/2019/03/31/scLab3/3.png" alt="Iterator"></p>
+<p><strong>facade模式</strong><br>&emsp;&emsp;很简单，就是把你整个系统的各项API做成一个类来给用户使用。打个比方就像下面的电脑中CPU，Memroy，和disk是你的系统的各个组件，你的电脑给用户的接口就只能有开机关机等功能，这时你就要做一个叫Computer的Facade类来提供给用户。在大型系统的开发中有可能出现多级facade类。</p>
+<p><img src="/2019/03/31/scLab3/4.png" alt="facade"></p>
+<p><strong>strategy设计模式</strong><br>&emsp;&emsp;strategy设计模式就是利用多态特性（接口等)，<a href="http://baijiahao.baidu.com/s?id=1601547440739500969&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">具体点这里</a><br><strong>decorator设计模式</strong><br>&emsp;&emsp;目标是能支持动态地给一个对象添加一些额外的职责（用人话说就是要给一个类增加一个方法）。就增加功能来说，Decorator模式相比生成子类更为灵活，可以根据运行时的需要决定加多少东西，<a href="https://blog.csdn.net/jiadongfengyahoo/article/details/7567807" target="_blank" rel="noopener">更详细戳这里（带例子）</a>。<br>&emsp;&emsp;抽象构件类（Component）：给出一个抽象的接口，用以规范准备接收附加责任的对象<br>&emsp;&emsp;具体构件类（ConcreteComponent）：定义一个具体的准备接受附加责任的类，其必须实现Component接口。<br>&emsp;&emsp;装饰者类（Decorator）：有一个构件（Conponent）对象的成员变量，<strong>并定义一个和抽象构件一致的接口</strong>（我们就是通过这个一致的接口中的东西来加东西）。<br>&emsp;&emsp;具体装饰者类（Concrete Decoratator）：定义给构件对象“贴上”附加责任。<br>&emsp;&emsp;每次想给具体构建类的某个实例加上一点东西的时候，我们做出要加上的东西对应的具体装饰者类，以具体构建类作为构造器的输入参数，然后调用装饰类的方法输出装饰后的结果。注意上述所有的变量的声明都是他们的公共接口。<br><strong>state设计模式</strong><br>&emsp;&emsp;<a href="https://www.cnblogs.com/betterboyz/p/9378068.html" target="_blank" rel="noopener">具体例子点我</a><br>&emsp;&emsp;状态模式所涉及到的角色有：<br>&emsp;&emsp;环境(Context)角色，也成上下文：定义客户端所感兴趣的接口，并且保留一个具体状态类的实例。这个具体状态类的实例给出此环境对象的现有状态。<br>&emsp;&emsp;抽象状态(State)角色：定义一个接口，用以封装环境（Context）对象的一个特定的状态所对应的行为。<br>&emsp;&emsp;具体状态(ConcreteState)角色：每一个具体状态类都实现了环境（Context）的一个状态所对应的行为。<br><img src="/2019/03/31/scLab3/5.png" alt="state"><br><strong>memento备忘录模式</strong><br>&emsp;&emsp;Originator发起人角色：记录当前时刻的内部状态，负责定义哪些属于备份范围的状态，负责创建和恢复备忘录 数据。<br>&emsp;&emsp;Memento备忘录角色：负责存储Originator发起人对象的内部状态，在需要的时候提供发起人需要的内部状态。<br>&emsp;&emsp;Caretaker备忘录管理员角色：对备忘录进行管理、保存和提供备忘录。</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//发起人角色</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Originator</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//内部状态</span>
+    <span class="token keyword">private</span> String state <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> String <span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setState</span><span class="token punctuation">(</span>String state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//创建一个备忘录</span>
+    <span class="token keyword">public</span> Memento <span class="token function">createMemento</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Memento</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>state<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//恢复一个备忘录</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">restoreMemento</span><span class="token punctuation">(</span>Memento _memento<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setState</span><span class="token punctuation">(</span>_memento<span class="token punctuation">.</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//备忘录角色</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Memento</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//发起人的内部状态</span>
+    <span class="token keyword">private</span> String state <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//构造函数传递参数</span>
+    <span class="token keyword">public</span> <span class="token function">Memento</span><span class="token punctuation">(</span>String _state<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> _state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setState</span><span class="token punctuation">(</span>String state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>state <span class="token operator">=</span> state<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//备忘录管理员角色</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Caretaker</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//备忘录对象</span>
+    <span class="token keyword">private</span> Memento memento<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> Memento <span class="token function">getMemento</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> memento<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMemento</span><span class="token punctuation">(</span>Memento memento<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>memento <span class="token operator">=</span> memento<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//场景类</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//定义出发起人</span>
+        Originator originator <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Originator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//定义出备忘录管理员</span>
+        Caretaker caretaker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Caretaker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//创建一个备忘录</span>
+        caretaker<span class="token punctuation">.</span><span class="token function">setMemento</span><span class="token punctuation">(</span>originator<span class="token punctuation">.</span><span class="token function">createMemento</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//恢复一个备忘录</span>
+        originator<span class="token punctuation">.</span><span class="token function">restoreMemento</span><span class="token punctuation">(</span>caretaker<span class="token punctuation">.</span><span class="token function">getMemento</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
             </div>
 
