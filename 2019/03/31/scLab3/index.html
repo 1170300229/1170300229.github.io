@@ -377,6 +377,122 @@
 <span class="token punctuation">}</span>
 </code></pre>
 <p><strong>checkStyle</strong><br>&emsp;&emsp;别紧张不是什么设计模式，是个静态代码风格的检查工具。因为在实验五中要用这个改风格，我就看了看。在eclipse里面安装checkStyle的教程<a href="https://www.cnblogs.com/lanxuezaipiao/p/3202169.html" target="_blank" rel="noopener">点我</a>，安装完之后测试lab2的项目发现我的风格需要改的地方如下图黄色所示<br><img src="/2019/03/31/scLab3/6.png" alt="checkStyle"><br>&emsp;&emsp;我本来是直接右转开窗跳楼一条龙的。但是！Eclipse有Ctrl+Shift+F这个可以自动格式化代码的快捷键，我们是不是可以搞到这个checkStyle的编码规范，然后设置为Ctrl+Shift+F的格式化文件，那实验五中大量的修改风格的工作变成了按Ctrl+A和Ctrl+Shift+F。还能再爽一点吗？？？<br>&emsp;&emsp;实际上是有这种东西的。在eclipse设置（Perference）里面可以看到checkStyle是复制了Google的风格，我们就去Google的GitHub上面去翻，然后把xml文件搞到并设置为格式化程序的文件就好了。具体操作：1.<a href="https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml" target="_blank" rel="noopener">点我跳Google的风格文件</a> 2.Ctrl+A复制下来，保存为eclipse-java-google-style.xml 3.打开eclipse的格式化程序（英文的Eclipse应该在Java-CodeStyle-Formatter那里，看下面图） 4.新建一个风格，然后导入你刚刚保存的xml文件，点应用，再按Ctrl+A和Ctrl+Shift+F试试<br><img src="/2019/03/31/scLab3/7.png" alt="eclipse checkStyle"><br><strong>SpotBugs</strong><br>&emsp;&emsp;这也是个静态代码检查的工具，用来检测你代码中潜在的bug，具体安装教程<a href="https://blog.csdn.net/zhangb00/article/details/84070706" target="_blank" rel="noopener">点我</a>，要翻到下面的Eclipse部分看。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>&emsp;&emsp;整个项目的架构大致像下面那样，最顶层的接口是CircularOrbit，其中规定了实验要求的方法，以及获得内部表示的一些方法。而在最后的app中，我们实际上是创建了三个具体的应用来完成我们需要的功能。Track是对轨道的抽象，Graph是对关系网络的抽象。Track其实也是个接口，其中有具体的实现类，而不同的Track实现类实际上用于不同的应用。但在ConcreteCircularOrbit中我们依然是面对Track接口编程的。Graph则直接沿用了lab2中的graph，但是将边权改成了Double，并且增加了查找距离的方法。<br><img src="/2019/03/31/scLab3/8.png" alt="frame"><br>&emsp;&emsp;下面的包结构的图很好地说明了————我是真的不想画类图<br><img src="/2019/03/31/scLab3/9.png" alt="package"><br>&emsp;&emsp;由于细节实在是太多，且具有很强的针对性，因此我不打算在这里描述这些细节。具体见实验报告（以后会放上来的）。但是其中对熵的计算值得提一下，实际上计算模型来源于将n个相同的物体放入到m个不同的盒子中并结合信息熵的定义。<br><img src="/2019/03/31/scLab3/10.png" alt="熵"><br>&emsp;&emsp;泛型实际上是类型擦除，泛型类和泛型方法的时候都是在声明的时候同时声明泛型，并且在内部使用定义的泛型。具体的说明<a href="https://www.cnblogs.com/coprince/p/8603492.html" target="_blank" rel="noopener">点我</a>。其中值得注意的是泛型通配符’?’的使用，通过super和extend可以限定匹配的类型的范围。泛型的好处当然是提高了复用性，能够适应更多的应用环境。坏处是减少了泛型类内部的泛型对象的使用功能（即可调用的方法），因为被定义为泛型的类型的变量实际上是不知道他所能拥有的方法的。<strong>泛型是不存在子类替换父类的原则的</strong>。例如一个方法中如果定义传入的参数是Generic\&lt;Map>，那么是不能传入一个Generic\&lt;HashMap>的，这也正是通配符’?’存在的意义。另外创建泛型对象组成的数组时也可能需要用到通配符，详见链接。常用的泛型的一些例子见下面。</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//泛型类</span>
+<span class="token comment" spellcheck="true">//子类在继承泛型类的时候可以指定泛型的具体类型</span>
+<span class="token keyword">class</span> 类名称 <span class="token operator">&lt;</span>泛型标识：可以随便写任意标识号，标识指定的泛型的类型<span class="token operator">></span><span class="token punctuation">{</span>
+  <span class="token keyword">private</span> 泛型标识 <span class="token comment" spellcheck="true">/*（成员变量类型）*/</span> var<span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Generic</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//key这个成员变量的类型为T,T的类型由外部指定</span>
+    <span class="token keyword">private</span> T key<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Generic</span><span class="token punctuation">(</span>T key<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//泛型构造方法形参key的类型也为T，T的类型由外部指定</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> T <span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//泛型方法getKey的返回值类型为T，T的类型由外部指定</span>
+        <span class="token keyword">return</span> key<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span> <span class="token punctuation">(</span>String args<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//泛型的类型参数只能是类类型（包括自定义类），不能是简单类型</span>
+    <span class="token comment" spellcheck="true">//传入的实参类型需与泛型的类型参数类型相同，即为Integer.</span>
+    Generic<span class="token operator">&lt;</span>Integer<span class="token operator">></span> genericInteger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Generic</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token number">123456</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//传入的实参类型需与泛型的类型参数类型相同，即为String.</span>
+    Generic<span class="token operator">&lt;</span>String<span class="token operator">></span> genericString <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Generic</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"key_vlaue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"泛型测试"</span><span class="token punctuation">,</span><span class="token string">"key is "</span> <span class="token operator">+</span> genericInteger<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Log<span class="token punctuation">.</span><span class="token function">d</span><span class="token punctuation">(</span><span class="token string">"泛型测试"</span><span class="token punctuation">,</span><span class="token string">"key is "</span> <span class="token operator">+</span> genericString<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//泛型接口</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Generator</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> T <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+ * 传入泛型实参时：
+ * 定义一个生产器实现这个接口,虽然我们只创建了一个泛型接口Generator&lt;T>
+ * 但是我们可以为T传入无数个实参，形成无数种类型的Generator接口。
+ * 在实现类实现泛型接口时，如已将泛型类型传入实参类型
+ * 则所有使用泛型的地方都要替换成传入的实参类型
+ * 即：Generator&lt;T>，public T next();中的的T都要替换成传入的String类型。
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FruitGenerator</span> <span class="token keyword">implements</span> <span class="token class-name">Generator</span><span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> fruits <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"Apple"</span><span class="token punctuation">,</span> <span class="token string">"Banana"</span><span class="token punctuation">,</span> <span class="token string">"Pear"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Random rand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> fruits<span class="token punctuation">[</span>rand<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//泛型方法</span>
+<span class="token comment" spellcheck="true">/**
+ * 泛型方法的基本介绍
+ * @param tClass 传入的泛型实参
+ * @return T 返回值为T类型
+ * 说明：
+ *     1）public 与 返回值中间&lt;T>非常重要，可以理解为声明此方法为泛型方法。
+ *     2）只有声明了&lt;T>的方法才是泛型方法，泛型类中的使用了泛型的成员方法并不是泛型方法。
+ *     3）&lt;T>表明该方法将使用泛型类型T，此时才可以在方法中使用泛型类型T。
+ *     4）与泛型类的定义一样，此处T可以随便写为任意标识
+ *     常见的如T、E、K、V等形式的参数常用于表示泛型。
+ *     5) 如果拥有此方法的类也是泛型并且也声明了泛型T的时候
+ *     在此方法中的T将是定义在方法处的T，而不是类的泛型T
+ */</span>
+<span class="token keyword">public</span> <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">genericMethod</span><span class="token punctuation">(</span>Class<span class="token operator">&lt;</span>T<span class="token operator">></span> tClass<span class="token punctuation">)</span><span class="token keyword">throws</span> InstantiationException <span class="token punctuation">,</span>
+  IllegalAccessException<span class="token punctuation">{</span>
+        T instance <span class="token operator">=</span> tClass<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;关于可视化，这里采用的是java中自带的awt和swing。在awt的体系中JFrame负则窗口的绘制，JPanel相当于安装在窗口上的面板，能够在上面安装部件component或是通过Graphics绘图，也可以直接在JFrame上绘图。在这里可以直接用Graphics绘图而不需要关心layout或是其他部件的安装。<br>&emsp;&emsp;具体的操作方法是通过继承JFrame/JPanel，然后重写paint函数，利用其中的Graphics的方法来直接画画。其中Graphics有一种Graphics2D的类可以干很多神奇的事情，具体教程<a href="https://blog.csdn.net/xietansheng/article/details/55669157" target="_blank" rel="noopener">点我</a></p>
+<pre class=" language-java"><code class="language-java">    <span class="token comment" spellcheck="true">// 抗锯齿化</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span>Graphics2D<span class="token punctuation">)</span> g<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setRenderingHint</span><span class="token punctuation">(</span>RenderingHints<span class="token punctuation">.</span>KEY_ANTIALIASING<span class="token punctuation">,</span>
+    RenderingHints<span class="token punctuation">.</span>VALUE_ANTIALIAS_ON<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">//画虚线，可调参数</span>
+    <span class="token keyword">float</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dash <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">float</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    BasicStroke bs2 <span class="token operator">=</span>
+    <span class="token keyword">new</span> <span class="token class-name">BasicStroke</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> BasicStroke<span class="token punctuation">.</span>CAP_SQUARE<span class="token punctuation">,</span> BasicStroke<span class="token punctuation">.</span>JOIN_MITER<span class="token punctuation">,</span> <span class="token number">10.0f</span><span class="token punctuation">,</span> dash<span class="token punctuation">,</span> <span class="token number">0.0f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span>Graphics2D<span class="token punctuation">)</span> g<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setStroke</span><span class="token punctuation">(</span>bs2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&emsp;&emsp;动画则一定要继承JPanel，直接继承JFrame会出现严重的闪烁现象，是因为JPanel有一种叫双缓冲的技术，能够很好的解决闪烁。而JPanel中是默认使用的。具体做法我是参考<a href="https://www.cnblogs.com/douzujun/p/6146962.html" target="_blank" rel="noopener">这里的（点我）</a>。在上面那个网址中作者继承的是JFrame，我不知道他怎么解决闪烁的问题的…绘制动画的原理很简单就是每隔一段时间就更新画面（在实验里是更新行星的位置）并重画。需要自己定义一个新的线程类并且在构造JPanel的时候开启这个新的线程。在自己定义的线程中sleep一段时间后在调用repaint。这里可以通过重写update方法（repaint实际上会调用的方法）来每次只重画行星从而提高重画的速度。注意有关repaint详细的细节<a href="http://www.doc88.com/p-2943492367206.html" target="_blank" rel="noopener">点我</a></p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 继承的JPanel的构造函数</span>
+<span class="token keyword">public</span> <span class="token function">StarPanel</span><span class="token punctuation">(</span>StellarSystem inputOrbit<span class="token punctuation">,</span> <span class="token keyword">boolean</span> centerNameOn<span class="token punctuation">,</span> <span class="token keyword">boolean</span> objectNameOn<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    orbit <span class="token operator">=</span> inputOrbit<span class="token punctuation">;</span>
+    centerName <span class="token operator">=</span> centerNameOn<span class="token punctuation">;</span>
+    objectName <span class="token operator">=</span> objectNameOn<span class="token punctuation">;</span>
+
+    <span class="token keyword">new</span> <span class="token class-name">PaintThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 在构造的时候就开启新的线程</span>
+  <span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//自定义的线程</span>
+  <span class="token keyword">class</span> <span class="token class-name">PaintThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">repaint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+          Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          nowTime <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>&emsp;&emsp;电子结构的可视化<br><img src="/2019/03/31/scLab3/11.png" alt="AtomStructure"><br>&emsp;&emsp;社交网络的可视化<br><img src="/2019/03/31/scLab3/12.png" alt="SocialNetworkCircle"><br>&emsp;&emsp;放一张太阳系<br><img src="/2019/03/31/scLab3/13.png" alt="StellarSytem"><br>&emsp;&emsp;最后记录一点想法。在项目中尽可能限制mutable的范围，例如不再Track中记录轨道物体，因为这会让Track变成mutable，而是在CircularOrbit来建立轨道物体和Trakc的对应关系，这样就将Track变为immutable。限制mutable将大大提高项目的可靠性，以及修改的代价。项目中最考验的应该是类结构和每个类的功能的设计。这非常依赖对抽象层次的理解。有时候会出现面对一个接口/父类但是需要其具体的实现类/子类的功能，这就是抽象层次的设计的问题。不同的客户端面对的抽象层次不一样，需要创建的对象也不一样。更加具体的客户需要创建抽象树中更具体的子类，而更加抽象的客户端则更多地面对接口或是父类。合适的抽象层次的设计会让每一个客户都找到自己需要的层次而不是过多地通过组合或是其他手段制造一个自己需要的对象。抽象树应当具有类似开闭原则的特征，即可以很容易地扩展出更加具体的子类，不需要修改高层的抽象结构。</p>
 
             </div>
 
