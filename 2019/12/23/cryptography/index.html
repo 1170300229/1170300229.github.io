@@ -237,7 +237,53 @@
 <p>​        窃听不可区分实验，给予了敌手公钥，再让敌手选择明文，相当于CPA不可区分实验，相当于多重消息加密安全。因此在窃听者存在的情况下，没有一种确定性的公钥加密方案具有不可区分加密。给定任意一个输入为定长消息的公钥加密按方案，如果是窃听者存在情况下的不可区分加密，那么可以得到输入为任意长度消息的公钥加密方案。</p>
 <p>​        混合加密。可以加速长消息的加密和解密。其中公钥加密方案是CPA安全的，私钥加密方案是窃听者存在安全的，那么混合加密方案是CPA安全的公钥加密方案。</p>
 <p><img src="/2019/12/23/cryptography/image-20191226113145060.png" alt="image-20191226113145060"></p>
-<p>​        </p>
+<p>​        陷门置换簇（Gen，Samp,f，Inv）。有td就可以容易求出x。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226132747045.png" alt="image-20191226132747045"></p>
+<p>​        利用陷门置换构造公钥加密方案，<strong>注意公钥加密方案中明文都可以只有1个比特</strong>。证明规约一个针对公钥加密的敌手到一个对硬核谓词的区分器。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226142209716.png" alt="image-20191226142209716"></p>
+<p>​        CCA不可区分实验。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226142702012.png" alt="image-20191226142702012"></p>
+<h2 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h2><p>​        教科书式RSA。e，d的长度都是n。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226182741977.png" alt="image-20191226182741977"></p>
+<p>​        GenRSA。</p>
+<p>​        RSA假设。其中x相当于密文。可以根据RSA构造陷门置换。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226190422989.png" alt="image-20191226190422989"></p>
+<p>​        对教科书式RSA的攻击。1.使用小e加密短消息，当使用小e时的一般攻击，2.恢复明文m的平方改进，尝试m的每个可能值。还有公共模攻击1，即N一样，e，d不一样，对内无法保密，公共模攻击2，对外无法保密。不是CCA安全的。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226203153445.png" alt="image-20191226203153445"></p>
+<p>​        填充RSA。l(n)不能太大（如l(n)=2n-O(logn)），否则可以用蛮力搜索枚举所有的随机值。当RSA假设成立，l(n)=O(logn)，构造方案有CPA安全。修订后的新的方案叫做OAEP（最优非对称加密充填），F-OAEP是CCA安全，F是指一个任意的陷门置换，RSA-SAEP+是CCA安全的。对RSA的攻击有Timing attack，Power attack，Defense：Blinding，Key generation trouble，Faults attack有防御Defense：check output（10%性能）。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226203634599.png" alt="image-20191226203634599"></p>
+<h2 id="DH问题和Elgamal加密方案"><a href="#DH问题和Elgamal加密方案" class="headerlink" title="DH问题和Elgamal加密方案"></a>DH问题和Elgamal加密方案</h2><p>​        循环群。离散对数，生成元的指数。求解离散对数的算法：暴力搜索，BSGS，Pohlig-Hellman，Index calculus，general number field sieve（最好的）。离散对数实验。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226212251924.png" alt="image-20191226212251924"></p>
+<p>​        DH假设。Computational Diffie-Hellman problem（CDH），decisional Diffied-Hellman problem（DDH）。DDH比CDH和DL都简单。密钥交换实验。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226215822799.png" alt="image-20191226215822799"></p>
+<p>​        Diffie-Hellman密钥交换协议。概率多项式时间算法输出一个循环群，群的阶为q（||q||=n），生成元为g。无法防住中间人攻击。如果DDH是困难的，则Diffie-Hellman密钥交换协议在窃听者存在情况下是安全的。证明可以从b=0和b=1，然后转化为判定行Diffie-Hellman问题。多方密钥交换。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226223134565.png" alt="image-20191226223134565"></p>
+<p>​        EIGamal加密方案。如果DDH问题相对于概率多项式时间的算法来说是困难的，则EIGamal加密方案在CPA情况下有不可区分的加密。可以共享公共参数（G，q，g）。</p>
+<p><img src="/2019/12/23/cryptography/image-20191226233324323.png" alt="image-20191226233324323"></p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>​        与消息鉴别码的比较，发送者需要与多个接收方通信时，使用数字签名，简化密钥管理，避免为每一个密钥计算MAC标签，数字签名可以公开验证，是可传递的，具有不可抵赖性。数字签名不是公钥加密的逆向过程。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227013245118.png" alt="image-20191227013245118"></p>
+<p>​        签名安全实验。通过了则称为适应性选择消息攻击下是存在性不可伪造的。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227011649743.png" alt="image-20191227011649743"></p>
+<p>​        教科书式RSA签名。不安全。1.无消息攻击，利用公钥即可伪造签名。2.对任意消息伪造签名，需要得到两条同一签名者的签名。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227013957142.png" alt="image-20191227013957142"></p>
+<p>​        散列后的RSA签名方案。也有无消息攻击和对任意消息伪造签名攻击。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227014906385.png" alt="image-20191227014906385"></p>
+<p>​        散列后RSA为混合结构，相对教科书式RSA有另一个优势，可以用于对任意长度的比特串进行签名。如果构造用的公钥数字签名方案是适应性选择消息攻击下的存在性不可伪造的，且散列函数是抗碰撞的，那么构造方案在适应性选择消息攻击下是存在性不可伪造的。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227015834519.png" alt="image-20191227015834519"></p>
+<p>​        离散对数的数字签名。认证方案的定义。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227021835845.png" alt="image-20191227021835845"></p>
+<p>​        Fiat-Shamir变换，可以构造一个（非交互的）签名方案，通过签名方自己运行协议。如果认证方案是安全的认证方案并且H是随机预言机，那么Fiat-Shamir变换得到一个安全的签名方案。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227022113056.png" alt="image-20191227022113056"></p>
+<p>​        Schnorr认证方案。如果离散对数问题是困难的，那么Schnorr认证方案是安全的。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227022421858.png" alt="image-20191227022421858"></p>
+<p>​        Schnorr签名方案。DSS（数字签名标准）使用DSA（数字签名算法），DSA是一种EIGamal签名方案的变体）。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227022609615.png" alt="image-20191227022609615"></p>
+<p>​        一次性签名方案。当此方案只用于对一个消息进行签名时，是安全的。一次性签名实验。通过一次性签名实验称为签名方案在单消息攻击下是存在性不可伪造的，或者为一次性签名方案。具体有Lamport签名方案。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227022831520.png" alt="image-20191227022831520"></p>
+<p>​        Lamport签名方案。设l为任意多项式，如果f为单向函数，则构造方案为一个消息长度为l的一次性签名方案。如果存在单向函数，则对于任意多项式l，都存在一个针对消息长度为l的一次性签名方案。</p>
+<p><img src="/2019/12/23/cryptography/image-20191227023331420.png" alt="image-20191227023331420"></p>
+<p>​        适应性选择消息攻击下存在性不可伪造的签名方案有：1.基于Chain的签名，2.基于Tree的签名。</p>
+<p>​        数字证书和公钥基础设施。单一认证机构。多个证书认证机构。授权和证书链。信任Web模型。吊销证书，过期，撤销，都可以通过添加额外信息。</p>
 
             </div>
 
